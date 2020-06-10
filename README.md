@@ -1,58 +1,55 @@
-# SQL highlighting in Python multiline strings for VS Code 
+# Markdown highlighting in Python multiline strings for VS Code
 
-Adds syntax highlight support for python multiline SQL strings in VS Code.
+Adds syntax highlight support for python multiline Markdown strings in VS Code.
+This should be helpful when using [streamlit](https://github.com/streamlit/streamlit), "the fastest way to build costom ML tools".
 
 ## Installation
 
-Install `python-string-sql` from extensions (`ctrl + shift + x` or `cmd + shift + x` on mac).
-> Also available on [marketplace.visualstudio.com](https://marketplace.visualstudio.com/items?itemName=ptweir.python-string-sql)
+Install `python-string-markdown` from extensions (`ctrl + shift + x` or `cmd + shift + x` on mac).
 
-## Example
-
-[![Example](docs/demo.png)](docs/demo.py)
-
-## Usage
-
-Insert `--sql`, `--beginsql`, or `--begin-sql` at the beginning of the part of the string you would like highlighted and a semicolon, `--endsql`, or `--end-sql` at the end of the highlighted section.
-
-### Snippets
-begin typing `sql` and the autocomplete snippet will appear:
-
-![Snippet](docs/snippet.gif)
-
-### Keybindings
-
-cmd+s (or ctrl+s on mac) - Insert the following snippet:
-```
-"""
---sql
-SELECT
-;
-"""
-```
+> Also available on [marketplace.visualstudio.com](https://marketplace.visualstudio.com/items?itemName=nukopy.python-string-markdown)
 
 ## Requirements
 
-- Visual Studio Code v1.32.0 recommended
+- Visual Studio Code v1.45.1 recommended
 - Comments at beginning and end of highlighted section in the string (see Usage section).
 
+## Usage
+
+### Basic
+
+Insert `<!-- md -->` at the beginning of the part of the string you would like highlighted and insert `<!-- end-md -->` at the end of the highlighted section.
+
+- `demo/demo.py`
+
+![Example](demo/demo.png)
+
+### Use with streamlit
+
+This extension should be helpful when using [streamlit](https://github.com/streamlit/streamlit), "the fastest way to build costom ML tools".
+If you use streamlit, you can write texts in Markdown in Python docsting written with three double-quotation like `""" text """`.
+However, texts in docsting is not highlighted, so this extension would be helpful.
+
+![Example-streamlit](demo/demo-streamlit.png)
+
+### Snippets
+
+Begin typing `md`, `markdown`, or `md/markdown` and the autocomplete snippet will appear:
+
+![Snippet](demo/snippet.gif)
+
 ## Community
-- 2018-09-04 forked from [es6-string-css](https://github.com/bashmish/es6-string-css)
+
+- 2020-06-10 forked from [python-string-sql](https://github.com/ptweir/python-string-sql)
 
 ## Release Notes
 
-### [1.1.0] - 2019-06-04
-- Added support for f-strings
+### [0.1.0] - 2020-06-10
 
-### [1.0.0] - 2019-03-29
-- Added snippet and keybinding
-
-### [0.1.0] - 2019-03-28
 - Published on VS Code marketplace
 
-### [0.0.1] - 2019-03-28
-- Got it working based on [these instructions](https://code.visualstudio.com/api/language-extensions/syntax-highlight-guide)
+### [0.0.1] - 2020-06-10
 
-### [0.0.0] - 2018-09-04
-- Forked from es6-string-html
+#### Added
 
+- First working version
