@@ -1,60 +1,44 @@
 {
-    "name": "python-string-sql",
-    "displayName": "python-string-sql",
-    "description": "highlight python strings as sql",
-    "version": "1.1.0",
-    "publisher": "ptweir",
-    "icon": "docs/logo.png",
-    "repository": {
-        "url": "https://github.com/ptweir/python-string-sql"
-    },
-    "engines": {
-        "vscode": "^1.32.0"
-    },
-    "categories": [
-        "Programming Languages",
-        "Snippets"
+  "name": "python-string-markdown",
+  "displayName": "python-string-markdown",
+  "description": "highlight python strings as Markdown",
+  "version": "0.6.0",
+  "publisher": "nukopy",
+  "icon": "",
+  "engines": {
+    "vscode": "^1.45.1"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets"
+  ],
+  "keywords": [
+    "python",
+    "markdown"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nukopy/python-string-markdown"
+  },
+  "license": "MIT",
+  "contributes": {
+    "grammars": [
+      {
+        "path": "./syntaxes/highlight-markdown-string.json",
+        "scopeName": "python-markdown.injection",
+        "injectTo": [
+          "source.python"
+        ],
+        "embeddedLanguages": {
+          "meta.embedded.block.markdown": "markdown"
+        }
+      }
     ],
-    "contributes": {
-        "grammars": [
-            {
-                "path": "./syntaxes/highlight-sql-string.json",
-                "scopeName": "python-sql.injection",
-                "injectTo": [
-                    "source.python"
-                ],
-                "embeddedLanguages": {
-                    "meta.embedded.sql": "sql"
-                }
-            },
-            {
-                "path": "./syntaxes/highlight-html-string.json",
-                "scopeName": "python-html.injection",
-                "injectTo": [
-                    "source.python"
-                ],
-                "embeddedLanguages": {
-                    "meta.embedded.block.html": "html"
-                }
-            }
-        ],
-        "snippets": [
-            {
-                "language": "python",
-                "path": "./snippets/python.json"
-            }
-        ],
-        "keybindings": [
-            {
-                "command": "editor.action.insertSnippet",
-                "key": "cmd+s",
-                "mac": "ctrl+s",
-                "when": "editorTextFocus",
-                "args": {
-                    "langId": "python",
-                    "name": "SQL_highlighted_string"
-                }
-            }
-        ]
-    }
+    "snippets": [
+      {
+        "language": "python",
+        "path": "./snippets/python.json"
+      }
+    ]
+  }
 }
