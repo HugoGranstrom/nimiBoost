@@ -2,7 +2,7 @@
   "name": "python-string-markdown",
   "displayName": "python-string-markdown",
   "description": "highlight python strings as Markdown",
-  "version": "0.6.0",
+  "version": "0.1.0",
   "publisher": "nukopy",
   "icon": "",
   "engines": {
