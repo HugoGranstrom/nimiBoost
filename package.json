@@ -22,23 +22,19 @@
   },
   "license": "MIT",
   "contributes": {
-    "grammars": [
-      {
-        "path": "./syntaxes/highlight-markdown-string.json",
-        "scopeName": "python-markdown.injection",
-        "injectTo": [
-          "source.python"
-        ],
-        "embeddedLanguages": {
-          "meta.embedded.block.markdown": "markdown"
-        }
+    "grammars": [{
+      "path": "./syntaxes/highlight-markdown-string.json",
+      "scopeName": "python-markdown.injection",
+      "injectTo": [
+        "source.python"
+      ],
+      "embeddedLanguages": {
+        "meta.embedded.block.markdown": "markdown"
       }
-    ],
-    "snippets": [
-      {
-        "language": "python",
-        "path": "./snippets/python.json"
-      }
-    ]
+    }],
+    "snippets": [{
+      "language": "python",
+      "path": "./snippets/python.json"
+    }]
   }
 }
