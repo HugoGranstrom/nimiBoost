@@ -1,6 +1,6 @@
-# Markdown highlighting in Python multiline strings for VS Code
+# Markdown highlighting in Python multiline strings for Visual Studio Code
 
-Adds syntax highlight support for python multiline Markdown strings in VS Code.
+Adds syntax highlight support for python multiline Markdown strings in Visual Studio Code.
 This should be helpful when using [streamlit](https://github.com/streamlit/streamlit), "the fastest way to build costom ML tools".
 
 ## Installation
