@@ -27,7 +27,7 @@
         "path": "./syntaxes/highlight-markdown-string.json",
         "scopeName": "python-markdown.injection",
         "injectTo": [
-          "source.python"
+          "source.nim"
         ],
         "embeddedLanguages": {
           "meta.embedded.block.markdown": "markdown"
