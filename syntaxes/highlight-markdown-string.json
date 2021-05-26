@@ -13,17 +13,20 @@
   ],
   "repository": {
     "markdown-in-python": {
-      "name": "meta.embedded.block.markdown",
-      "begin": "(nbText:) (\"\"\")",
+      "contentName": "meta.embedded.block.markdown",
+      "begin": "(nbText:)\\s*(.*)(\"\"\")",
       "beginCaptures": {
         "1": {
           "name": "source.nim"
         },
         "2": {
+          "name": "support.function.any-method.nim"
+        },
+        "3": {
           "name": "string.quoted.triple.nim"
         }
       },
-      "end": "(\"\"\")",
+      "end": "\\s*(\"\"\")",
       "endCaptures": {
         "1": {
           "name": "string.quoted.triple.nim"
