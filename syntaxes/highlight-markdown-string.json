@@ -14,7 +14,7 @@
   "repository": {
     "markdown-in-python": {
       "contentName": "meta.embedded.block.markdown",
-      "begin": "(nbText:)\\s*(.*)(\"\"\")",
+      "begin": "(n(?i)bText(?-i):)\\s*(.*)(\"\"\")",
       "beginCaptures": {
         "1": {
           "name": "source.nim"
