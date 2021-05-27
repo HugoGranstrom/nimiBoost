@@ -1,5 +1,5 @@
 {
-	"name": "nimiBoost",
+	"name": "nimiboost",
 	"displayName": "NimiBoost",
 	"description": "Provides syntax highlighting for embedded markdown in Nimib",
 	"version": "0.0.1",
