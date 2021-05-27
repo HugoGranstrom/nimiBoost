@@ -1,18 +1,18 @@
 {
-  "scopeName": "python-markdown.injection",
+  "scopeName": "nimib-esh.injection",
   "fileTypes": ["nim"],
   "injectionSelector": "L:source.nim",
   "patterns": [
     {
       "patterns": [
         {
-          "include": "#markdown-in-python"
+          "include": "#markdown-in-nimib"
         }
       ]
     }
   ],
   "repository": {
-    "markdown-in-python": {
+    "markdown-in-nimib": {
       "contentName": "meta.embedded.block.markdown",
       "begin": "(n(?i)bText(?-i):)\\s*(.*)(\"\"\")",
       "beginCaptures": {

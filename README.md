@@ -1,55 +1,70 @@
-# Markdown highlighting in Python multiline strings for Visual Studio Code
+# nimibBoost README
 
-Adds syntax highlight support for python multiline Markdown strings in Visual Studio Code.
-This should be helpful when using [streamlit](https://github.com/streamlit/streamlit), "the fastest way to build costom ML tools".
+This is the README for your extension "nimiBoost". After writing up a brief description, we recommend including the following sections.
 
-## Installation
+## Features
 
-Install `python-string-markdown` from extensions (`ctrl + shift + x` or `cmd + shift + x` on mac).
+Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
 
-> Also available on [marketplace.visualstudio.com](https://marketplace.visualstudio.com/items?itemName=nukopy.python-string-markdown)
+For example if there is an image subfolder under your extension project workspace:
+
+\!\[feature X\]\(images/feature-x.png\)
+
+> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
 
 ## Requirements
 
-- Visual Studio Code v1.45.1 recommended
-- Comments at beginning and end of highlighted section in the string (see Usage section).
+If you have any requirements or dependencies, add a section describing those and how to install and configure them.
 
-## Usage
+## Extension Settings
 
-### Basic
+Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
 
-Insert `<!-- md -->` at the beginning of the part of the string you would like highlighted and insert `<!-- end-md -->` at the end of the highlighted section.
+For example:
 
-- `demo/demo.py`
+This extension contributes the following settings:
 
-![Example](demo/demo.png)
+* `myExtension.enable`: enable/disable this extension
+* `myExtension.thing`: set to `blah` to do something
 
-### Use with streamlit
+## Known Issues
 
-This extension should be helpful when using [streamlit](https://github.com/streamlit/streamlit), "the fastest way to build costom ML tools".
-If you use streamlit, you can write texts in Markdown in Python docsting written with three double-quotation like `""" text """`.
-However, texts in docsting is not highlighted, so this extension would be helpful.
-
-![Example-streamlit](demo/demo-streamlit.png)
-
-### Snippets
-
-Begin typing `md`, `markdown`, or `md/markdown` and the autocomplete snippet will appear:
-
-![Snippet](demo/snippet.gif)
-
-## Community
-
-- 2020-06-10 forked from [python-string-sql](https://github.com/ptweir/python-string-sql)
+Calling out known issues can help limit users opening duplicate issues against your extension.
 
 ## Release Notes
 
-### [0.1.0] - 2020-06-10
+Users appreciate release notes as you update your extension.
 
-- Published on VS Code marketplace
+### 1.0.0
 
-### [0.0.1] - 2020-06-10
+Initial release of ...
 
-#### Added
+### 1.0.1
 
-- First working version
+Fixed issue #.
+
+### 1.1.0
+
+Added features X, Y, and Z.
+
+-----------------------------------------------------------------------------------------------------------
+## Following extension guidelines
+
+Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
+
+* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
+
+## Working with Markdown
+
+**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
+
+* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
+* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
+* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
+
+### For more information
+
+* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
+* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+
+**Enjoy!**
