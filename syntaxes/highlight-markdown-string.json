@@ -1,5 +1,5 @@
 {
-  "scopeName": "nimib-esh.injection",
+  "scopeName": "nimiBoost.injection",
   "fileTypes": ["nim"],
   "injectionSelector": "L:source.nim",
   "patterns": [
