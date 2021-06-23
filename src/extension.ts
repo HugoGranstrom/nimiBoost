@@ -33,25 +33,57 @@ export function activate(context: vscode.ExtensionContext) {
 			return;
 		}
 		vscode.window.showInformationMessage('This should preview!' + currentlyOpenTabfilePath);
-		cp.exec('nim r --skipUserCfg:on --skipParentCfg:on --skipProjCfg:on ' + currentlyOpenTabfilePath, (err, stdout, stderr) => {
+		const filename = path.basename(currentlyOpenTabfilePath!, ".nim"); // plotting_basics
+		const dirname = path.dirname(currentlyOpenTabfilePath!); // users/code/nim
+		fs.mkdtemp(path.join(dirname, ".temp-"), (err, folder) => {
 			if (err) {
-				vscode.window.showInformationMessage(stderr);
+				console.log(err);
+				vscode.window.showInformationMessage("Something went wrong creating tempDir");
 			} else {
-				vscode.window.showInformationMessage("Compilation succeeded!");
-				//const tempDir = os.tmpdir();
-				const filename = path.basename(currentlyOpenTabfilePath!, ".nim");
-				const htmlFilePath = currentlyOpenTabfilePath!.replace(".nim", ".html");
-				const panel = vscode.window.createWebviewPanel(
-					filename,
-					filename,
-					vscode.ViewColumn.Beside,
-					{
-						enableScripts: true
+				const tempDir = folder;
+				vscode.window.showInformationMessage("Tempdir created: ", tempDir);
+
+				// Create empty book.json to fix https://github.com/pietroppeter/nimibook/issues/21
+				fs.writeFile(path.join(dirname, 'book.json'), '{}' , (error) => {if (error) {console.log(error);};});
+				
+
+				const outCmd = " -d:nimibOutDir=" + tempDir + " ";
+				const srcCmd = " -d:nimibSrcDir=" + dirname + " ";
+				const nimCmd = 'nim r ' + outCmd + srcCmd + currentlyOpenTabfilePath;
+				vscode.window.showInformationMessage(nimCmd);
+				cp.exec(nimCmd, (err, stdout, stderr) => {
+					if (err) {
+						vscode.window.showInformationMessage("Error!");
+						console.log(stdout);
+					} else {
+						vscode.window.showInformationMessage("Compilation succeeded!");
+						const htmlFilePath = path.join(tempDir, filename + ".html");
+						vscode.window.showInformationMessage("Page generated: " + htmlFilePath);
+						const panel = vscode.window.createWebviewPanel(
+							filename,
+							filename,
+							vscode.ViewColumn.Beside,
+							{
+								enableScripts: true
+							}
+						);
+						
+						panel.onDidDispose(
+							() => {
+								// remove temp folder
+								vscode.window.showInformationMessage("Deleting temp files!");
+								fs.rmdirSync(tempDir, {recursive: true});
+								fs.unlinkSync(path.join(dirname, 'book.json'));
+								vscode.window.showInformationMessage("Temp files deleted!");
+							},
+							null,
+							context.subscriptions
+						);
+						const htmlString = fs.readFileSync(htmlFilePath, 'utf8');
+						panel.webview.html = htmlString;
+						vscode.window.showInformationMessage("Webview finished!");
 					}
-				);
-				const htmlString = fs.readFileSync(htmlFilePath, 'utf8');
-				panel.webview.html = htmlString;
-				vscode.window.showInformationMessage("Webview finished!");
+				});
 			}
 		});
 	});
