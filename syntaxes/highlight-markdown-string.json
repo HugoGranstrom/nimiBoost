@@ -13,6 +13,56 @@
   ],
   "repository": {
     "markdown-in-nimib": {
+      "begin": "(f?md)(\")(?=\"{2})",
+      "beginCaptures": {
+        "1": {
+          "name": "support.function.any-method.nim"
+        },
+        "2": {
+          "name": "string.quoted.triple.nim"
+        }
+      },
+      "end": "(\"{3})",
+      "endCaptures": {
+        "1": {
+          "name": "string.quoted.triple.nim"
+        }
+      },
+      "patterns": [
+        {
+          "contentName": "meta.embedded.block.markdown",
+          "begin": "(\"{2})",
+          "beginCaptures": {
+            "1": {
+              "name": "string.quoted.triple.nim"
+            }
+          },
+          "end": "(?=\"{3})",
+          "patterns": [{"include": "text.html.markdown"}]
+        }
+        
+      ]
+    },
+    "markdown-in-nimib3": {
+      "contentName": "meta.embedded.block.markdown",
+      "begin": "(f?md)(\"{3})",
+      "beginCaptures": {
+        "1": {
+          "name": "support.function.any-method.nim"
+        },
+        "2": {
+          "name": "string.quoted.triple.nim"
+        }
+      },
+      "end": "(\"{3})",
+      "endCaptures": {
+        "1": {
+          "name": "string.quoted.triple.nim"
+        }
+      },
+      "patterns": [{"include": "text.html.markdown"}]
+    },
+    "markdown-in-nimib2": {
       "contentName": "meta.embedded.block.markdown",
       "begin": "(n(?i)bText(?-i):)\\s*(.*)(\"\"\")",
       "beginCaptures": {
