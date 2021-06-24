@@ -44,7 +44,7 @@ export function activate(context: vscode.ExtensionContext) {
 				vscode.window.showInformationMessage("Tempdir created: ", tempDir);
 
 				// Create empty book.json to fix https://github.com/pietroppeter/nimibook/issues/21
-				fs.writeFile(path.join(dirname, 'book.json'), '{}' , (error) => {if (error) {console.log(error);};});
+				//fs.writeFile(path.join(dirname, 'book.json'), '{}' , (error) => {if (error) {console.log(error);};});
 				
 
 				const outCmd = " -d:nimibOutDir=" + tempDir + " ";
@@ -73,7 +73,7 @@ export function activate(context: vscode.ExtensionContext) {
 								// remove temp folder
 								vscode.window.showInformationMessage("Deleting temp files!");
 								fs.rmdirSync(tempDir, {recursive: true});
-								fs.unlinkSync(path.join(dirname, 'book.json'));
+								//fs.unlinkSync(path.join(dirname, 'book.json'));
 								vscode.window.showInformationMessage("Temp files deleted!");
 							},
 							null,
