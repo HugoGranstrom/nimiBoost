@@ -79,7 +79,17 @@ export function activate(context: vscode.ExtensionContext) {
 							null,
 							context.subscriptions
 						);
-						const htmlString = fs.readFileSync(htmlFilePath, 'utf8');
+						let htmlString = fs.readFileSync(htmlFilePath, 'utf8');
+
+						// add <base> tag to the html
+						let mediaPath = vscode.Uri.file(tempDir).with({
+							scheme: "vscode-resource"
+						}).toString() + '/';
+						
+						let splitHtml = htmlString.split("<head>");
+						const injectString = `<head>\n<base href="${mediaPath}">\n`;
+						htmlString = [splitHtml[0], injectString, splitHtml[1]].join();
+
 						panel.webview.html = htmlString;
 						vscode.window.showInformationMessage("Webview finished!");
 					}
