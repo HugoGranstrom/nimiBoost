@@ -12,19 +12,12 @@ export function activate(context: vscode.ExtensionContext) {
 
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "nimib-esh" is now active!');
+	console.log('Congratulations, your extension "NimiBoost" is now active!');
 
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('nimib-esh.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
 
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from Nimib-ESH!');
-	});
-
-	context.subscriptions.push(disposable);
 
 	let runAndPreview = vscode.commands.registerCommand('nimiBoost.preview', () => {
 		var currentlyOpenTabfilePath = vscode.window.activeTextEditor?.document.uri.fsPath;
@@ -32,16 +25,18 @@ export function activate(context: vscode.ExtensionContext) {
 			vscode.window.showInformationMessage("No file is selected!");
 			return;
 		}
-		vscode.window.showInformationMessage('This should preview!' + currentlyOpenTabfilePath);
+		//vscode.window.showInformationMessage('This should preview!' + currentlyOpenTabfilePath);
+		vscode.window.showInformationMessage("Compilation started!");
 		const filename = path.basename(currentlyOpenTabfilePath!, ".nim"); // plotting_basics
 		const dirname = path.dirname(currentlyOpenTabfilePath!); // users/code/nim
 		fs.mkdtemp(path.join(dirname, ".temp-"), (err, folder) => {
 			if (err) {
 				console.log(err);
 				vscode.window.showInformationMessage("Something went wrong creating tempDir");
+				return;
 			} else {
 				const tempDir = folder;
-				vscode.window.showInformationMessage("Tempdir created: ", tempDir);
+				//vscode.window.showInformationMessage("Tempdir created: ", tempDir);
 
 				// Create empty book.json to fix https://github.com/pietroppeter/nimibook/issues/21
 				//fs.writeFile(path.join(dirname, 'book.json'), '{}' , (error) => {if (error) {console.log(error);};});
@@ -50,15 +45,15 @@ export function activate(context: vscode.ExtensionContext) {
 				const outCmd = " -d:nimibOutDir=" + tempDir + " ";
 				const srcCmd = " -d:nimibSrcDir=" + dirname + " ";
 				const nimCmd = 'nim r ' + outCmd + srcCmd + currentlyOpenTabfilePath;
-				vscode.window.showInformationMessage(nimCmd);
+				//vscode.window.showInformationMessage(nimCmd);
 				cp.exec(nimCmd, (err, stdout, stderr) => {
 					if (err) {
-						vscode.window.showInformationMessage("Error!");
+						vscode.window.showInformationMessage("Error compiling the nim file. Try compiling it manually to see a better error message!");
 						console.log(stdout);
 					} else {
 						vscode.window.showInformationMessage("Compilation succeeded!");
 						const htmlFilePath = path.join(tempDir, filename + ".html");
-						vscode.window.showInformationMessage("Page generated: " + htmlFilePath);
+						//vscode.window.showInformationMessage("Page generated: " + htmlFilePath);
 						const panel = vscode.window.createWebviewPanel(
 							filename,
 							filename,
@@ -71,10 +66,10 @@ export function activate(context: vscode.ExtensionContext) {
 						panel.onDidDispose(
 							() => {
 								// remove temp folder
-								vscode.window.showInformationMessage("Deleting temp files!");
+								//vscode.window.showInformationMessage("Deleting temp files!");
 								fs.rmdirSync(tempDir, {recursive: true});
 								//fs.unlinkSync(path.join(dirname, 'book.json'));
-								vscode.window.showInformationMessage("Temp files deleted!");
+								//vscode.window.showInformationMessage("Temp files deleted!");
 							},
 							null,
 							context.subscriptions
@@ -85,13 +80,13 @@ export function activate(context: vscode.ExtensionContext) {
 						let mediaPath = vscode.Uri.file(tempDir).with({
 							scheme: "vscode-resource"
 						}).toString() + '/';
-						
+
 						let splitHtml = htmlString.split("<head>");
 						const injectString = `<head>\n<base href="${mediaPath}">\n`;
 						htmlString = [splitHtml[0], injectString, splitHtml[1]].join();
 
 						panel.webview.html = htmlString;
-						vscode.window.showInformationMessage("Webview finished!");
+						//vscode.window.showInformationMessage("Webview finished!");
 					}
 				});
 			}
