@@ -1,31 +1,22 @@
-# nimiBoost README
-
-This is the README for your extension "nimiBoost". After writing up a brief description, we recommend including the following sections.
-
+# nimiBoost
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- Syntax highlighting for markdown in strings marked with `md` or `fmd`. Example:
 
-For example if there is an image subfolder under your extension project workspace:
+```nim
+nbText: md"""
+# The markdown
+- goes
+- here
+"""
+```
 
-\!\[feature X\]\(images/feature-x.png\)
+- Preview current Nimib-file using the task `Nimib Preview` or the shortcut `Ctrl+K V` (`Ctrl+K`, release, `V`).
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
 
 ## Requirements
 
 Requires an installation of Nim and Nimib. There is a separate Nim extension for general Nim programming. 
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
 
 ## Known Issues
 

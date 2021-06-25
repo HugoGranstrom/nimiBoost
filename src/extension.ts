@@ -45,10 +45,11 @@ export function activate(context: vscode.ExtensionContext) {
 				const outCmd = " -d:nimibOutDir=" + tempDir + " ";
 				const srcCmd = " -d:nimibSrcDir=" + dirname + " ";
 				const nimCmd = 'nim r ' + outCmd + srcCmd + currentlyOpenTabfilePath;
-				//vscode.window.showInformationMessage(nimCmd);
 				cp.exec(nimCmd, (err, stdout, stderr) => {
 					if (err) {
 						vscode.window.showInformationMessage("Error compiling the nim file. Try compiling it manually to see a better error message!");
+						vscode.window.showInformationMessage(nimCmd);
+						fs.rmdirSync(tempDir, {recursive: true}); // remove temp dir if failed build
 						console.log(stdout);
 					} else {
 						vscode.window.showInformationMessage("Compilation succeeded!");
