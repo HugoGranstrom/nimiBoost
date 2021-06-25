@@ -18,6 +18,10 @@ nbText: md"""
 
 Requires an installation of Nim and Nimib. There is a separate Nim extension for general Nim programming. 
 
+## Installation
+- VSCode Marketplace: https://marketplace.visualstudio.com/items?itemName=hugogranstrom.nimiboost
+- Open-VSX: https://open-vsx.org/extension/hugogranstrom/nimiboost 
+
 ## Known Issues
 
 - Only triple-quote strings supported.
