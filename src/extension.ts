@@ -51,6 +51,7 @@ export function activate(context: vscode.ExtensionContext) {
 						vscode.window.showInformationMessage(nimCmd);
 						fs.rmdirSync(tempDir, {recursive: true}); // remove temp dir if failed build
 						console.log(stdout);
+						return;
 					} else {
 						vscode.window.showInformationMessage("Compilation succeeded!");
 						const htmlFilePath = path.join(tempDir, filename + ".html");
