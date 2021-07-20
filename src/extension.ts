@@ -46,7 +46,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 				const outCmd = " -d:nimibOutDir=" + tempDir + " ";
 				const srcCmd = " -d:nimibSrcDir=" + dirname + " ";
-				const nimCmd = 'nim r ' + outCmd + srcCmd + currentlyOpenTabfilePath;
+				const nimCmd = 'nim r -d:release ' + outCmd + srcCmd + currentlyOpenTabfilePath;
 				cp.exec(nimCmd, (err, stdout, stderr) => {
 					if (err) {
 						vscode.window.showErrorMessage("Error compiling " + filename + ".nim!");
