@@ -8,6 +8,7 @@ import * as path from "path";
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
+
 export function activate(context: vscode.ExtensionContext) {
 
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
@@ -18,6 +19,7 @@ export function activate(context: vscode.ExtensionContext) {
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
 
+	const outputChannels: { [name: string]: vscode.OutputChannel } = {};
 
 	let runAndPreview = vscode.commands.registerCommand('nimiBoost.preview', () => {
 		var currentlyOpenTabfilePath = vscode.window.activeTextEditor?.document.uri.fsPath;
@@ -47,10 +49,21 @@ export function activate(context: vscode.ExtensionContext) {
 				const nimCmd = 'nim r ' + outCmd + srcCmd + currentlyOpenTabfilePath;
 				cp.exec(nimCmd, (err, stdout, stderr) => {
 					if (err) {
-						vscode.window.showInformationMessage("Error compiling the nim file. Try compiling it manually to see a better error message!");
-						vscode.window.showInformationMessage(nimCmd);
+						vscode.window.showErrorMessage("Error compiling " + filename + ".nim!");
+
 						fs.rmdirSync(tempDir, {recursive: true}); // remove temp dir if failed build
-						console.log(stdout);
+
+						var outputChannel: vscode.OutputChannel; 
+						if (filename in outputChannels) { // reuse the old output channel for the file
+							outputChannel = outputChannels[filename];
+							outputChannel.clear();
+						} else {
+							outputChannel = vscode.window.createOutputChannel("(NimiBoost) Error: " + filename);
+						}
+						outputChannel.appendLine("Nim command that failed: " + nimCmd);
+						outputChannel.append(stderr); // show error message
+						outputChannel.show(false); // focus on output channel
+						outputChannels[filename] = outputChannel;
 						return;
 					} else {
 						vscode.window.showInformationMessage("Compilation succeeded!");

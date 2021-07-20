@@ -36,9 +36,14 @@ text, more text and even more text"""
 
 ## Release Notes
 
+### 0.1.1
+
+Improved the error experience. Now the `stderr` is shown in the `Output` window. 
+
 ### 0.1
 
 Initial release of NimiBoost
+
 
 
 
