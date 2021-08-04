@@ -13,7 +13,7 @@
   ],
   "repository": {
     "markdown-in-nimib": {
-      "begin": "(f?md)(\")(?=\"{2})",
+      "begin": "\\s*(f?md)(\")(?=\"{2})",
       "beginCaptures": {
         "1": {
           "name": "support.function.any-method.nim"
@@ -22,7 +22,7 @@
           "name": "string.quoted.triple.nim"
         }
       },
-      "end": "(\"{3})",
+      "end": "\\s*(\"{3})",
       "endCaptures": {
         "1": {
           "name": "string.quoted.triple.nim"
@@ -37,7 +37,7 @@
               "name": "string.quoted.triple.nim"
             }
           },
-          "end": "(?=\"{3})",
+          "end": "\\s*(?=\"{3})",
           "patterns": [{"include": "text.html.markdown"}]
         }
         
