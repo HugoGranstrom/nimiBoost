@@ -18,6 +18,16 @@
 	],
 	"main": "./out/extension.js",
 	"contributes": {
+		"configuration": {
+			"title": "NimiBoost",
+			"properties": {
+				"nimiboost.codeAsInSource": {
+					"type": "boolean",
+					"default": false,
+					"description": "Render code blocks as they are written in the code (if disabled the Nim compiler will be used for parsing which may change how the code looks)."
+				}
+			}
+		},
 		"grammars": [
 			{
 				"path": "./syntaxes/highlight-markdown-string.json",

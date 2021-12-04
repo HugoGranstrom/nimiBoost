@@ -43,10 +43,15 @@ export function activate(context: vscode.ExtensionContext) {
 				// Create empty book.json to fix https://github.com/pietroppeter/nimibook/issues/21
 				//fs.writeFile(path.join(dirname, 'book.json'), '{}' , (error) => {if (error) {console.log(error);};});
 				
+				let codeAsInSourceCmd = " ";
+				const config = vscode.workspace.getConfiguration("nimiboost");
+				if (config.get("codeAsInSource")) {
+					codeAsInSourceCmd = " -d:nimibPreviewCodeAsInSource ";
+				}
 
-				const outCmd = " -d:nimibOutDir=" + tempDir + " ";
-				const srcCmd = " -d:nimibSrcDir=" + dirname + " ";
-				const nimCmd = 'nim r -d:release ' + outCmd + srcCmd + currentlyOpenTabfilePath;
+				const outCmd = " --nbHomeDir=" + tempDir + " ";
+				const srcCmd = " --nbSrcDir=" + dirname + " ";
+				const nimCmd = 'nim r -d:release ' + codeAsInSourceCmd + currentlyOpenTabfilePath + outCmd + srcCmd;
 				cp.exec(nimCmd, (err, stdout, stderr) => {
 					if (err) {
 						vscode.window.showErrorMessage("Error compiling " + filename + ".nim!");
