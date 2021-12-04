@@ -12,7 +12,7 @@ nbText: md"""
 ```
 
 - Preview current Nimib-file using the task `Nimib Preview` or the shortcut `Ctrl+K V` (`Ctrl+K`, release, `V`).
-  - `CodeAsInSource` setting is available to use `-d:nimibPreviewCodeAsInSource` in the preview.
+  - `codeAsInSource` setting is available to use `-d:nimibPreviewCodeAsInSource` in the preview.
 ## Requirements
 
 Requires an installation of Nim and Nimib. There is a separate Nim extension for general Nim programming. 
