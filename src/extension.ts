@@ -123,23 +123,6 @@ export function activate(context: vscode.ExtensionContext) {
 			vscode.window.showErrorMessage("No file is selected!");
 			return;
 		}
-		//var workfolder = vscode.workspace.workspaceFolders?[0].uri.fsPath;
-		//var workfolder = vscode.workspace.getWorkspaceFolder(vscode.Uri.file(currentlyOpenTabfilePath)); // might be undefined
-		//vscode.window.showInformationMessage(workfolder?.uri + ' ' + workfolder?.name);
-		//console.log('This is it! ' + workfolder?.uri + ' ' + workfolder?.name);
-		//console.log();
-
-		/* if (workfolder?.uri) {
-			const workPath = workfolder?.uri.fsPath;
-			var nimibtoml = fs.readFileSync(path.join(workPath, "nimib.toml"), 'utf8');
-			const obj: any = TOML.parse(nimibtoml);
-			let nimibsrcDir: any = obj["nimib"]["srcDir"];
-			let nimibHomeDir = obj["nimib"]["homeDir"];
-			const pathRelToSrc = path.relative(path.join(workPath, nimibsrcDir), currentlyOpenTabfilePath);
-			console.log("Congratts " + pathRelToSrc + ' ' + path.join(workPath, nimibHomeDir, pathRelToSrc));
-			console.log('Congrats... ' + JSON.stringify(obj));
-		} */
-		//console.log("Congraatts... " + findParentDir.sync(currentlyOpenTabfilePath, 'nimib.toml')); // null if not found!
 
 		vscode.window.showInformationMessage("Compilation started!");
 		const filename = path.basename(currentlyOpenTabfilePath!, ".nim"); // plotting_basics
@@ -180,6 +163,7 @@ export function activate(context: vscode.ExtensionContext) {
 			// If no nimib.toml file is found, it will default to outputting the file next to the source.
 			outDir = dirname;
 		}
+
 		console.log("[nimiboost] outDir: " + outDir);
 		let compilerArgs = [' '];
 		const config = vscode.workspace.getConfiguration("nimiboost");
@@ -190,8 +174,8 @@ export function activate(context: vscode.ExtensionContext) {
 
 		const nimCmd = 'nim r -d:release ' + compilerArgs.join(' ') + currentlyOpenTabfilePath;
 		console.log("[nimiboost] nimCmd: " + nimCmd);
-		cp.exec(nimCmd, (err, stdout, stderr) => {
-			if (err || true) {
+		cp.exec("cd " + dirname + " && " + nimCmd, (err, stdout, stderr) => {
+			if (err) {
 				vscode.window.showErrorMessage("Error compiling " + filename + ".nim!");
 
 				var outputChannel: vscode.OutputChannel; 
@@ -202,7 +186,7 @@ export function activate(context: vscode.ExtensionContext) {
 					outputChannel = vscode.window.createOutputChannel("(NimiBoost) Error: " + filename);
 				}
 				outputChannel.appendLine("Nim command that failed: " + nimCmd);
-				outputChannel.append(stdout); // show error message
+				outputChannel.append(stderr); // show error message
 				outputChannel.show(false); // focus on output channel
 				outputChannels[filename] = outputChannel;
 				return;
