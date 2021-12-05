@@ -2,7 +2,7 @@
 	"name": "nimiboost",
 	"displayName": "NimiBoost",
 	"description": "Provides syntax highlighting for embedded markdown in Nimib",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"publisher": "HugoGranstrom",
 	"repository": "https://github.com/HugoGranstrom/nimiBoost",
 	"engines": {
@@ -13,7 +13,8 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:nimiBoost.preview"
+		"onCommand:nimiBoost.preview",
+		"onCommand:nimiBoost.previewLegacy"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -43,6 +44,10 @@
 			{
 				"command": "nimiBoost.preview",
 				"title": "Nimib Preview"
+			},
+			{
+				"command": "nimiBoost.previewLegacy",
+				"title": "Nimib Preview (Legacy)"
 			}
 		],
 		"keybindings": [
@@ -57,6 +62,10 @@
 			"commandPalette": [
 				{
 					"command": "nimiBoost.preview",
+					"when": "editorLangId == nim"
+				},
+				{
+					"command": "nimiBoost.previewLegacy",
 					"when": "editorLangId == nim"
 				}
 			]

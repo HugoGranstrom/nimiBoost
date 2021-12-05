@@ -34,7 +34,8 @@ text, more text and even more text"""
 ```
 
 ## Release Notes
-
+### 0.3
+Preview mode is upgraded to understand `nimib.toml` files and will no longer create temporary folders. Files will go where nimib would have put them. The old command is still available but under the name `Nimib Preview (Legacy)` which you can add your own keybinding for if you want to keep it. This means themes like nimiBook will have correct styling and loading of files works as expected in nimib.
 ### 0.2
 - Support nimib 0.2
 - Added setting to enable `codeAsInSource`.
