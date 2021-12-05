@@ -5,9 +5,8 @@ import * as fs from "fs";
 import * as cp from "child_process";
 import * as os from "os";
 import * as path from "path";
-
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
+const TOML = require('@iarna/toml');
+const findParentDir = require('find-parent-dir');
 
 export function activate(context: vscode.ExtensionContext) {
 
@@ -21,12 +20,14 @@ export function activate(context: vscode.ExtensionContext) {
 
 	const outputChannels: { [name: string]: vscode.OutputChannel } = {};
 
-	let runAndPreview = vscode.commands.registerCommand('nimiBoost.preview', () => {
+	let runAndPreviewLegacy = vscode.commands.registerCommand('nimiBoost.previewLegacy', () => {
+
 		var currentlyOpenTabfilePath = vscode.window.activeTextEditor?.document.uri.fsPath;
 		if (currentlyOpenTabfilePath == undefined) {
 			vscode.window.showInformationMessage("No file is selected!");
 			return;
 		}
+
 		//vscode.window.showInformationMessage('This should preview!' + currentlyOpenTabfilePath);
 		vscode.window.showInformationMessage("Compilation started!");
 		const filename = path.basename(currentlyOpenTabfilePath!, ".nim"); // plotting_basics
@@ -109,6 +110,133 @@ export function activate(context: vscode.ExtensionContext) {
 						//vscode.window.showInformationMessage("Webview finished!");
 					}
 				});
+			}
+		});
+	});
+
+	context.subscriptions.push(runAndPreviewLegacy);
+
+	let runAndPreview = vscode.commands.registerCommand('nimiBoost.preview', () => {
+
+		var currentlyOpenTabfilePath = vscode.window.activeTextEditor?.document.uri.fsPath;
+		if (currentlyOpenTabfilePath == undefined) {
+			vscode.window.showErrorMessage("No file is selected!");
+			return;
+		}
+		//var workfolder = vscode.workspace.workspaceFolders?[0].uri.fsPath;
+		//var workfolder = vscode.workspace.getWorkspaceFolder(vscode.Uri.file(currentlyOpenTabfilePath)); // might be undefined
+		//vscode.window.showInformationMessage(workfolder?.uri + ' ' + workfolder?.name);
+		//console.log('This is it! ' + workfolder?.uri + ' ' + workfolder?.name);
+		//console.log();
+
+		/* if (workfolder?.uri) {
+			const workPath = workfolder?.uri.fsPath;
+			var nimibtoml = fs.readFileSync(path.join(workPath, "nimib.toml"), 'utf8');
+			const obj: any = TOML.parse(nimibtoml);
+			let nimibsrcDir: any = obj["nimib"]["srcDir"];
+			let nimibHomeDir = obj["nimib"]["homeDir"];
+			const pathRelToSrc = path.relative(path.join(workPath, nimibsrcDir), currentlyOpenTabfilePath);
+			console.log("Congratts " + pathRelToSrc + ' ' + path.join(workPath, nimibHomeDir, pathRelToSrc));
+			console.log('Congrats... ' + JSON.stringify(obj));
+		} */
+		//console.log("Congraatts... " + findParentDir.sync(currentlyOpenTabfilePath, 'nimib.toml')); // null if not found!
+
+		vscode.window.showInformationMessage("Compilation started!");
+		const filename = path.basename(currentlyOpenTabfilePath!, ".nim"); // plotting_basics
+		const dirname = path.dirname(currentlyOpenTabfilePath!); // users/code/nim
+		
+		const nimibTomlDir = findParentDir.sync(currentlyOpenTabfilePath, 'nimib.toml');
+		let outDir = ""; // the directory the final html file will be produced
+		if (nimibTomlDir) {
+			console.log("[nimiboost] toml dir exists!");
+			const nimibTomlFile = fs.readFileSync(path.join(nimibTomlDir, "nimib.toml"), 'utf8');
+			const nimibCfg = TOML.parse(nimibTomlFile);
+			if (nimibCfg["nimib"]) {
+				console.log("[nimiboost] nimib section exists!");
+				let relPath = ""; // The relative path of the file's folder. This will be used w.r.t. homeDir later on.
+				if (nimibCfg["nimib"]["srcDir"]) {
+					console.log("[nimiboost] srcDir Exists");
+					relPath = path.relative(path.join(nimibTomlDir, nimibCfg["nimib"]["srcDir"]), dirname);
+				} else {
+					console.log("[nimiboost] srcDir doesn't exists");
+					// If srcDir not provided, use default.
+					relPath = ".";
+				}
+				if(nimibCfg["nimib"]["homeDir"]) {
+					console.log("[nimiboost] homeDir exists");
+					// if homeDir is provided, use nimibTomlDir + nimibCfg["homeDir"] as homeDir
+					outDir = path.join(nimibTomlDir, nimibCfg["nimib"]["homeDir"], relPath);
+				} else {
+					console.log("[nimiboost] homeDir doesn't exists");
+					// if no homeDir provided, use current folder as homeDir.
+					outDir = path.join(dirname, relPath);
+				}
+			} else {
+				vscode.window.showErrorMessage("Invalid nimib.toml file! No [nimib] section found!");
+				return;
+			}
+		} else {
+			console.log("[nimiboost] no toml file found!");
+			// If no nimib.toml file is found, it will default to outputting the file next to the source.
+			outDir = dirname;
+		}
+		console.log("[nimiboost] outDir: " + outDir);
+		let compilerArgs = [' '];
+		const config = vscode.workspace.getConfiguration("nimiboost");
+		if (config.get("codeAsInSource")) {
+			compilerArgs.push("-d:nimibPreviewCodeAsInSource");
+		}
+		compilerArgs.push(' ');
+
+		const nimCmd = 'nim r -d:release ' + compilerArgs.join(' ') + currentlyOpenTabfilePath;
+		console.log("[nimiboost] nimCmd: " + nimCmd);
+		cp.exec(nimCmd, (err, stdout, stderr) => {
+			if (err || true) {
+				vscode.window.showErrorMessage("Error compiling " + filename + ".nim!");
+
+				var outputChannel: vscode.OutputChannel; 
+				if (filename in outputChannels) { // reuse the old output channel for the file
+					outputChannel = outputChannels[filename];
+					outputChannel.clear();
+				} else {
+					outputChannel = vscode.window.createOutputChannel("(NimiBoost) Error: " + filename);
+				}
+				outputChannel.appendLine("Nim command that failed: " + nimCmd);
+				outputChannel.append(stdout); // show error message
+				outputChannel.show(false); // focus on output channel
+				outputChannels[filename] = outputChannel;
+				return;
+			} else {
+				vscode.window.showInformationMessage("Compilation succeeded!");
+				const htmlFilePath = path.join(outDir, filename + ".html");
+				const panel = vscode.window.createWebviewPanel(
+					filename,
+					filename,
+					vscode.ViewColumn.Beside,
+					{
+						enableScripts: true
+					}
+				);
+				
+				panel.onDidDispose(
+					() => {
+						
+					},
+					null,
+					context.subscriptions
+				);
+				let htmlString = fs.readFileSync(htmlFilePath, 'utf8');
+
+				// add <base> tag to the html
+				let mediaPath = vscode.Uri.file(outDir).with({
+					scheme: "vscode-resource"
+				}).toString() + '/';
+
+				let splitHtml = htmlString.split("<head>");
+				const injectString = `<head>\n<base href="${mediaPath}">\n`;
+				htmlString = [splitHtml[0], injectString, splitHtml[1]].join();
+
+				panel.webview.html = htmlString;
 			}
 		});
 	});
