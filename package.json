@@ -2,7 +2,7 @@
 	"name": "nimiboost",
 	"displayName": "NimiBoost",
 	"description": "Provides syntax highlighting for embedded markdown in Nimib",
-	"version": "0.3.0",
+	"version": "0.3.1",
 	"publisher": "HugoGranstrom",
 	"repository": "https://github.com/HugoGranstrom/nimiBoost",
 	"engines": {
@@ -55,7 +55,7 @@
 				"command": "nimiBoost.preview",
 				"key": "ctrl+k v",
 				"mac": "cmd+k v",
-				"when": "editorTextFocus"
+				"when": "editorTextFocus && editorLangId == nim"
 			}
 		],
 		"menus": {
