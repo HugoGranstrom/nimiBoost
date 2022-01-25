@@ -53,6 +53,9 @@ Improved the error experience. Now the `stderr` is shown in the `Output` window.
 
 Initial release of NimiBoost
 
+## Todo
+- Replace the notification cards with a spot in the bottom bar. https://code.visualstudio.com/api/references/vscode-api#window.createStatusBarItem https://www.reddit.com/r/vscode/comments/iktb15/released_my_first_vscode_extension_a_status_bar/
+
 
 
 
