@@ -8,6 +8,11 @@ import * as path from "path";
 const TOML = require('@iarna/toml');
 const findParentDir = require('find-parent-dir');
 
+
+let statusBarItem: vscode.StatusBarItem;
+let compilingStatusBarItem: vscode.StatusBarItem;
+
+
 export function activate(context: vscode.ExtensionContext) {
 
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
@@ -117,14 +122,15 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(runAndPreviewLegacy);
 
 	let runAndPreview = vscode.commands.registerCommand('nimiBoost.preview', () => {
-
+		compilingStatusBarItem.show();
 		var currentlyOpenTabfilePath = vscode.window.activeTextEditor?.document.uri.fsPath;
 		if (currentlyOpenTabfilePath == undefined) {
 			vscode.window.showErrorMessage("No file is selected!");
+			compilingStatusBarItem.hide();
 			return;
 		}
 
-		vscode.window.showInformationMessage("Compilation started!");
+		//vscode.window.showInformationMessage("Compilation started!");
 		const filename = path.basename(currentlyOpenTabfilePath!, ".nim"); // plotting_basics
 		const dirname = path.dirname(currentlyOpenTabfilePath!); // users/code/nim
 		
@@ -156,6 +162,7 @@ export function activate(context: vscode.ExtensionContext) {
 				}
 			} else {
 				vscode.window.showErrorMessage("Invalid nimib.toml file! No [nimib] section found!");
+				compilingStatusBarItem.hide();
 				return;
 			}
 		} else {
@@ -170,13 +177,15 @@ export function activate(context: vscode.ExtensionContext) {
 		if (config.get("codeAsInSource")) {
 			compilerArgs.push("-d:nimibPreviewCodeAsInSource");
 		}
+		compilerArgs.push(config.get("cmdArgs") as string);
 		compilerArgs.push(' ');
 
-		const nimCmd = 'nim r -d:release ' + compilerArgs.join(' ') + currentlyOpenTabfilePath;
+		const nimCmd = 'nim r ' + compilerArgs.join(' ') + currentlyOpenTabfilePath;
 		console.log("[nimiboost] nimCmd: " + nimCmd);
 		cp.exec("cd " + dirname + " && " + nimCmd, (err, stdout, stderr) => {
 			if (err) {
 				vscode.window.showErrorMessage("Error compiling " + filename + ".nim!");
+				compilingStatusBarItem.hide();
 
 				var outputChannel: vscode.OutputChannel; 
 				if (filename in outputChannels) { // reuse the old output channel for the file
@@ -191,7 +200,7 @@ export function activate(context: vscode.ExtensionContext) {
 				outputChannels[filename] = outputChannel;
 				return;
 			} else {
-				vscode.window.showInformationMessage("Compilation succeeded!");
+				//vscode.window.showInformationMessage("Compilation succeeded!");
 				const htmlFilePath = path.join(outDir, filename + ".html");
 				const panel = vscode.window.createWebviewPanel(
 					filename,
@@ -221,11 +230,21 @@ export function activate(context: vscode.ExtensionContext) {
 				htmlString = [splitHtml[0], injectString, splitHtml[1]].join();
 
 				panel.webview.html = htmlString;
+				compilingStatusBarItem.hide();
 			}
 		});
 	});
 
 	context.subscriptions.push(runAndPreview);
+
+	statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100); // right aligned with priority 100
+	statusBarItem.text = "NimiBoost 🚀";
+	statusBarItem.command = "nimiBoost.preview";
+	statusBarItem.show();
+
+	compilingStatusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 0);
+	compilingStatusBarItem.text = "$(gear~spin) NimiBoost: Compiling";
+	context.subscriptions.push(statusBarItem);
 }
 
 // this method is called when your extension is deactivated
