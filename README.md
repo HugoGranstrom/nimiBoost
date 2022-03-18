@@ -11,7 +11,7 @@ nbText: md"""
 """
 ```
 
-- Preview current Nimib-file using the task `Nimib Preview` or the shortcut `Ctrl+K V` (`Ctrl+K`, release, `V`).
+- Preview current Nimib-file using the task `Nimib Preview`, clicking on `NimiBoost 🚀` in the statusbar or the shortcut `Ctrl+K V` (`Ctrl+K`, release, `V`).
   - `codeAsInSource` setting is available to use `-d:nimibPreviewCodeAsInSource` in the preview.
 ## Requirements
 
@@ -34,6 +34,11 @@ text, more text and even more text"""
 ```
 
 ## Release Notes
+### 0.4
+- No more annoying popups saying that the compilation has started and succeded! Now all of that happens in the statusbar at the bottom. 
+- new configuration option `cmdArgs` to pass in command line arguments to the compiler.
+- `-d:release` is no longer the default, use above-mentioned configuration if you want to compile in release mode.
+
 ### 0.3.1
 Limit the preview keybindings to Nim files (it tried to run it on markdown files otherwise).
 
@@ -54,7 +59,7 @@ Improved the error experience. Now the `stderr` is shown in the `Output` window.
 Initial release of NimiBoost
 
 ## Todo
-- Replace the notification cards with a spot in the bottom bar. https://code.visualstudio.com/api/references/vscode-api#window.createStatusBarItem https://www.reddit.com/r/vscode/comments/iktb15/released_my_first_vscode_extension_a_status_bar/
+Empty for now.
 
 
 
