@@ -14,7 +14,8 @@
 	],
 	"activationEvents": [
 		"onCommand:nimiBoost.preview",
-		"onCommand:nimiBoost.previewLegacy"
+		"onCommand:nimiBoost.previewLegacy",
+		"workspaceContains:**/nimib.toml"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
