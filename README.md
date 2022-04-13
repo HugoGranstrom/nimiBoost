@@ -1,15 +1,18 @@
 # nimiBoost
 ## Features
 
-- Syntax highlighting for markdown in strings marked with `md` or `fmd`. Example:
+- Syntax highlighting for markdown in strings marked with `hlMd` or `hlMdF` (`F`-variant is alias for string interpolation: `&(hlMd""""Text here""")`). Example:
 
 ```nim
-nbText: md"""
+nbText: hlMd"""
 # The markdown
 - goes
 - here
 """
 ```
+
+- Syntax highlight python code in `nbPython` blocks using `hlPy` or `hlPyF` similairly as `hlMd`.
+
 
 - Preview current Nimib-file using the task `Nimib Preview`, clicking on `NimiBoost 🚀` in the statusbar or the shortcut `Ctrl+K V` (`Ctrl+K`, release, `V`).
   - `codeAsInSource` setting is available to use `-d:nimibPreviewCodeAsInSource` in the preview.
@@ -27,13 +30,23 @@ You may have to restart VSCode for all features to activate.
 - Only triple-quote strings supported.
 - It's picky about where the ending `"""` is. It has to be on it's own row. So this is **not** allowed:
 ```nim
-nbText: """
+nbText: hlMd"""
 # Header
 text, more text and even more text"""
 # """ <-- This is the correct position!
 ```
 
 ## Release Notes
+### 0.4.1
+- Python highlighted strings are now supported using the `hlPy` and `hlPyF` markers:
+```nim
+nbPython: hlPy"""
+import numpy as np
+print(np.linspace(0, 10, 11))
+"""
+```
+- Nimib is switching over from using `md` and `fmd` to the more general `hlMd` and `hlMdF`. The old variants will still work but may be removed in the future. 
+
 ### 0.4
 - No more annoying popups saying that the compilation has started and succeded! Now all of that happens in the statusbar at the bottom. 
 - new configuration option `cmdArgs` to pass in command line arguments to the compiler.
