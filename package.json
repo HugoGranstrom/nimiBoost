@@ -42,7 +42,8 @@
 					"source.nim"
 				],
 				"embeddedLanguages": {
-					"meta.embedded.block.markdown": "markdown"
+					"meta.embedded.block.markdown": "markdown",
+					"meta.embedded.block.python": "python"
 				}
 			}
 		],

@@ -7,13 +7,16 @@
       "patterns": [
         {
           "include": "#markdown-in-nimib"
+        },
+        {
+        "include": "#python-in-nimib"
         }
       ]
     }
   ],
   "repository": {
     "markdown-in-nimib": {
-      "begin": "\\s*(f?md)(\")(?=\"{2})",
+      "begin": "\\s*(?i)(f?md|hlMdF?)(\")(?=\"{2})",
       "beginCaptures": {
         "1": {
           "name": "support.function.any-method.nim"
@@ -39,6 +42,37 @@
           },
           "end": "\\s*(?=\"{3})",
           "patterns": [{"include": "text.html.markdown"}]
+        }
+        
+      ]
+    },
+    "python-in-nimib": {
+      "begin": "\\s*(?i)(hlPyF?)(\")(?=\"{2})",
+      "beginCaptures": {
+        "1": {
+          "name": "support.function.any-method.nim"
+        },
+        "2": {
+          "name": "string.quoted.triple.nim"
+        }
+      },
+      "end": "\\s*(\"{3})",
+      "endCaptures": {
+        "1": {
+          "name": "string.quoted.triple.nim"
+        }
+      },
+      "patterns": [
+        {
+          "contentName": "source.python",
+          "begin": "(\"{2})",
+          "beginCaptures": {
+            "1": {
+              "name": "string.quoted.triple.nim"
+            }
+          },
+          "end": "\\s*(?=\"{3})",
+          "patterns": [{"include": "source.python"}]
         }
         
       ]
