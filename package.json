@@ -2,7 +2,7 @@
 	"name": "nimiboost",
 	"displayName": "NimiBoost",
 	"description": "Provides syntax highlighting for embedded markdown in Nimib",
-	"version": "0.4.0",
+	"version": "0.4.1",
 	"publisher": "HugoGranstrom",
 	"repository": "https://github.com/HugoGranstrom/nimiBoost",
 	"engines": {
