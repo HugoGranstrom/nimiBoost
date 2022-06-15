@@ -37,6 +37,9 @@ text, more text and even more text"""
 ```
 
 ## Release Notes
+### 0.4.2
+- Nim highlighted strings now supported using `hlNim` and `hlNimF`.
+
 ### 0.4.1
 - Python highlighted strings are now supported using the `hlPy` and `hlPyF` markers:
 ```nim
