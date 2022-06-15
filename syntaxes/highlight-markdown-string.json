@@ -10,6 +10,9 @@
         },
         {
         "include": "#python-in-nimib"
+        },
+        {
+        "include": "#nim-in-nimib"
         }
       ]
     }
@@ -73,6 +76,37 @@
           },
           "end": "\\s*(?=\"{3})",
           "patterns": [{"include": "source.python"}]
+        }
+        
+      ]
+    },
+    "nim-in-nimib": {
+      "begin": "\\s*(?i)(hlNimF?)(\")(?=\"{2})",
+      "beginCaptures": {
+        "1": {
+          "name": "support.function.any-method.nim"
+        },
+        "2": {
+          "name": "string.quoted.triple.nim"
+        }
+      },
+      "end": "\\s*(\"{3})",
+      "endCaptures": {
+        "1": {
+          "name": "string.quoted.triple.nim"
+        }
+      },
+      "patterns": [
+        {
+          "contentName": "source.nim",
+          "begin": "(\"{2})",
+          "beginCaptures": {
+            "1": {
+              "name": "string.quoted.triple.nim"
+            }
+          },
+          "end": "\\s*(?=\"{3})",
+          "patterns": [{"include": "source.nim"}]
         }
         
       ]

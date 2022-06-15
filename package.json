@@ -43,7 +43,8 @@
 				],
 				"embeddedLanguages": {
 					"meta.embedded.block.markdown": "markdown",
-					"meta.embedded.block.python": "python"
+					"meta.embedded.block.python": "python",
+					"meta.embedded.block.nim": "nim"
 				}
 			}
 		],
