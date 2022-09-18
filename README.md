@@ -1,7 +1,7 @@
 # nimiBoost
 ## Features
 
-- Syntax highlighting for markdown in strings marked with `hlMd` or `hlMdF` (`F`-variant is alias for string interpolation: `&(hlMd""""Text here""")`). Example:
+- Syntax highlighting for markdown/Python/HTML/Nim in strings marked with `hlMd`/`hlPy`/`hlHtml`/`hlNim`. For markdown use `hlMd` or `hlMdF` (`F`-variant is alias for string interpolation: `&(hlMd""""Text here""")`). Example:
 
 ```nim
 nbText: hlMd"""
@@ -12,6 +12,8 @@ nbText: hlMd"""
 ```
 
 - Syntax highlight python code in `nbPython` blocks using `hlPy` or `hlPyF` similairly as `hlMd`.
+- Syntax highlight HTML code using `hlHtml` or `hlHtmlF` similairly as `hlMd`.
+- Syntax highlight Nim code using `hlNim` or `hlNimF` similairly as `hlMd`.
 
 
 - Preview current Nimib-file using the task `Nimib Preview`, clicking on `NimiBoost 🚀` in the statusbar or the shortcut `Ctrl+K V` (`Ctrl+K`, release, `V`).
@@ -37,6 +39,9 @@ text, more text and even more text"""
 ```
 
 ## Release Notes
+### 0.4.3
+- `hlHtml` and `hlHtmlF` for highlighting HTML in strings.
+
 ### 0.4.2
 - Nim highlighted strings now supported using `hlNim` and `hlNimF`.
 

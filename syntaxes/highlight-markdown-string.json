@@ -13,6 +13,9 @@
         },
         {
         "include": "#nim-in-nimib"
+        },
+        {
+          "include": "#html-in-nimib"
         }
       ]
     }
@@ -107,6 +110,37 @@
           },
           "end": "\\s*(?=\"{3})",
           "patterns": [{"include": "source.nim"}]
+        }
+        
+      ]
+    },
+    "html-in-nimib": {
+      "begin": "\\s*(?i)(hlHtmlF?)(\")(?=\"{2})",
+      "beginCaptures": {
+        "1": {
+          "name": "support.function.any-method.nim"
+        },
+        "2": {
+          "name": "string.quoted.triple.nim"
+        }
+      },
+      "end": "\\s*(\"{3})",
+      "endCaptures": {
+        "1": {
+          "name": "string.quoted.triple.nim"
+        }
+      },
+      "patterns": [
+        {
+          "contentName": "text.html.derivative",
+          "begin": "(\"{2})",
+          "beginCaptures": {
+            "1": {
+              "name": "string.quoted.triple.nim"
+            }
+          },
+          "end": "\\s*(?=\"{3})",
+          "patterns": [{"include": "text.html.derivative"}]
         }
         
       ]
